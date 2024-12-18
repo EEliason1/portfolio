@@ -8,6 +8,8 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ManageProjects from "./pages/ManageProjects";
+import ManageBlogs from "./pages/ManageBlogs";
 
 const AppRouter: React.FC = () => (
   <Routes>
@@ -21,6 +23,8 @@ const AppRouter: React.FC = () => (
     {/* Protected Admin Routes */}
     <Route element={<ProtectedRoute />}>
       <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/projects" element={<ManageProjects />} />
+      <Route path="/admin/blogs" element={<ManageBlogs />} />
     </Route>
   </Routes>
 );

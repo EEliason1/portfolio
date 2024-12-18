@@ -5,14 +5,14 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/admin");
+    localStorage.removeItem("token"); // Remove JWT token
+    navigate("/admin"); // Redirect to admin login
   };
 
   return (
     <section className="p-8 text-center">
       <h2 className="text-3xl font-bold mb-6">Admin Dashboard</h2>
-      <div className="space-x-4">
+      <div className="space-y-4">
         <Link
           to="/admin/projects"
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
