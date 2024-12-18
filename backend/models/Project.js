@@ -1,28 +1,29 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const projectSchema = mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, 'Please add a title'],
+const ProjectSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    demoUrl: {
+      type: String,
+      required: false,
+    },
+    repoUrl: {
+      type: String,
+      required: false,
+    },
+    imageUrl: {
+      type: String,
+      required: false,
+    },
   },
-  description: {
-    type: String,
-    required: [true, 'Please add a description'],
-  },
-  imageUrl: {
-    type: String,
-    required: [true, 'Please add an image URL'],
-  },
-  demoUrl: {
-    type: String,
-    required: [true, 'Please add a demo URL'],
-  },
-  repoUrl: {
-    type: String,
-    required: [true, 'Please add a repository URL'],
-  },
-}, {
-  timestamps: true,
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Project', projectSchema);
+module.exports = mongoose.model("Project", ProjectSchema);

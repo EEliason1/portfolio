@@ -1,45 +1,58 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const cors = require('cors');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
-const connectDB = require('./config/db');
+require("dotenv").config(); // Load environment variables
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const helmet = require("helmet"); // For securing HTTP headers
+const xss = require("xss-clean"); // Prevent XSS attacks
+const rateLimit = require("express-rate-limit"); // Limit repeated requests
+const mongoSanitize = require("express-mongo-sanitize"); // Prevent NoSQL injection
 
-// Load environment variables
-dotenv.config();
+const authRoutes = require("./routes/auth"); // Authentication routes
+const projectRoutes = require("./routes/projects"); // Project-related routes
+const blogRoutes = require("./routes/blogs"); // Blog-related routes
 
-// Connect to MongoDB
-connectDB();
-
-// Initialize Express
 const app = express();
 
-// Security middleware
+// Security Middleware
 app.use(helmet()); // Secure HTTP headers
-app.use(mongoSanitize()); // Prevent NoSQL injection
 app.use(xss()); // Prevent XSS attacks
-app.use(cors({ origin: process.env.CLIENT_URL })); // Restrict CORS
-app.use(express.json());
-
-// Rate limiting
+app.use(mongoSanitize()); // Sanitize data against NoSQL injection
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100, // Limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
 
-// API routes (placeholders)
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/blogs', require('./routes/blogRoutes'));
+// Middleware
+app.use(express.json()); // Parse JSON request bodies
+app.use(cors({ origin: ["http://localhost:5173"], credentials: true })); // Allow requests from frontend
 
-// Root route
-app.get('/', (req, res) => {
-  res.send('API is running...');
+// MongoDB Connection
+const connectDB = async () => {
+  mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.error("MongoDB connection error:", error));
+
+};
+connectDB();
+
+// Routes
+app.use("/api/auth", authRoutes); // Authentication routes
+app.use("/api/projects", projectRoutes); // Project routes
+app.use("/api/blogs", blogRoutes); // Blog routes
+
+// Default Route
+app.get("/api", (req, res) => {
+  res.json({ message: "API is running..." });
 });
 
-// Start server
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "An error occurred!" });
+});
+
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
