@@ -5,6 +5,8 @@ import {
   updateProject,
   deleteProject,
 } from "../api/adminApi";
+import { toast } from "react-toastify";
+import PageWrapper from "../components/PageWrapper";
 
 const ManageProjects: React.FC = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -17,20 +19,30 @@ const ManageProjects: React.FC = () => {
   }, []);
 
   const loadProjects = async () => {
-    const data = await getProjects();
-    setProjects(data);
+    try {
+      const data = await getProjects();
+      setProjects(data);
+    } catch (error) {
+      toast.error("Failed to fetch projects.");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (editId) {
-      await updateProject(editId, form, token!);
-    } else {
-      await createProject(form, token!);
+    try {
+      if (editId) {
+        await updateProject(editId, form, token!);
+        toast.success("Project updated successfully!");
+      } else {
+        await createProject(form, token!);
+        toast.success("Project created successfully!");
+      }
+      setForm({ title: "", description: "", demoUrl: "", repoUrl: "", imageUrl: "" });
+      setEditId(null);
+      loadProjects();
+    } catch (error) {
+      toast.error("Failed to save the project.");
     }
-    setForm({ title: "", description: "", demoUrl: "", repoUrl: "", imageUrl: "" });
-    setEditId(null);
-    loadProjects();
   };
 
   const handleEdit = (project: any) => {
@@ -39,66 +51,87 @@ const ManageProjects: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    await deleteProject(id, token!);
-    loadProjects();
+    try {
+      await deleteProject(id, token!);
+      toast.success("Project deleted successfully!");
+      loadProjects();
+    } catch (error) {
+      toast.error("Failed to delete the project.");
+    }
   };
 
   return (
-    <section className="p-8">
-      <h2 className="text-3xl font-bold mb-6">Manage Projects</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Title"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Demo URL"
-          value={form.demoUrl}
-          onChange={(e) => setForm({ ...form, demoUrl: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Repo URL"
-          value={form.repoUrl}
-          onChange={(e) => setForm({ ...form, repoUrl: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Image URL"
-          value={form.imageUrl}
-          onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
-        <textarea
-          placeholder="Description"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          {editId ? "Update" : "Create"} Project
-        </button>
-      </form>
+    <PageWrapper>
+      <section className="p-8">
+        <h2 className="text-4xl font-bold text-white mb-6 text-center">Manage Projects</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Title"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Demo URL"
+            value={form.demoUrl}
+            onChange={(e) => setForm({ ...form, demoUrl: e.target.value })}
+            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Repo URL"
+            value={form.repoUrl}
+            onChange={(e) => setForm({ ...form, repoUrl: e.target.value })}
+            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={form.imageUrl}
+            onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
+          />
+          <textarea
+            placeholder="Description"
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            rows={4}
+            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition-transform transform hover:-translate-y-1"
+          >
+            {editId ? "Update" : "Create"} Project
+          </button>
+        </form>
 
-      <div className="mt-8 space-y-4">
-        {projects.map((project) => (
-          <div key={project._id} className="p-4 border rounded shadow">
-            <h3 className="text-xl font-semibold">{project.title}</h3>
-            <p>{project.description}</p>
-            <div className="space-x-2 mt-2">
-              <button onClick={() => handleEdit(project)} className="text-yellow-500">Edit</button>
-              <button onClick={() => handleDelete(project._id)} className="text-red-500">Delete</button>
+        <div className="mt-8 space-y-4">
+          {projects.map((project) => (
+            <div key={project._id} className="bg-gray-800 p-4 rounded shadow-md">
+              <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+              <p className="text-gray-400 mt-2">{project.description}</p>
+              <div className="mt-4 space-x-4">
+                <button
+                  onClick={() => handleEdit(project)}
+                  className="text-yellow-500 hover:text-yellow-400"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(project._id)}
+                  className="text-red-500 hover:text-red-400"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
+    </PageWrapper>
   );
 };
 

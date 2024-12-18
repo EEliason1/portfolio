@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #1a1a1a; /* Dark background */
+  color: #e5e5e5; /* Subtle gray text */
+  font-family: 'Inter', sans-serif;
+}
+
+a {
+  color: #ffffff;
+}
+
+button {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-3px); /* Subtle hover lift */
+}

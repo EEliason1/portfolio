@@ -5,30 +5,30 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove JWT token
-    navigate("/admin"); // Redirect to admin login
+    localStorage.removeItem("token");
+    navigate("/admin");
   };
 
   return (
     <section className="p-8 text-center">
-      <h2 className="text-3xl font-bold mb-6">Admin Dashboard</h2>
+      <h2 className="text-4xl font-bold text-white mb-6">Admin Dashboard</h2>
       <div className="space-y-4">
         <Link
           to="/admin/projects"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-gray-800 text-white px-6 py-3 rounded hover:bg-gray-700 transition-transform transform hover:-translate-y-1"
         >
           Manage Projects
         </Link>
         <Link
           to="/admin/blogs"
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="bg-gray-800 text-white px-6 py-3 rounded hover:bg-gray-700 transition-transform transform hover:-translate-y-1"
         >
           Manage Blogs
         </Link>
       </div>
       <button
         onClick={handleLogout}
-        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mt-4"
+        className="bg-red-500 text-white px-6 py-3 rounded hover:bg-red-600 transition-transform transform hover:-translate-y-1 mt-4"
       >
         Logout
       </button>

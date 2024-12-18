@@ -7,12 +7,13 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ManageProjects from "./pages/ManageProjects";
 import ManageBlogs from "./pages/ManageBlogs";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const AppRouter: React.FC = () => (
   <Routes>
+    {/* Public Routes */}
     <Route path="/" element={<Home />} />
     <Route path="/projects" element={<Projects />} />
     <Route path="/blog" element={<Blog />} />

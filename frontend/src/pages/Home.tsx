@@ -1,33 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PageWrapper from "../components/PageWrapper";
 
 const Home: React.FC = () => (
-  <section className="p-8 text-center">
-    <h1 className="text-4xl font-bold mb-4">Welcome to My Portfolio</h1>
-    <p className="text-lg mb-6">
-      Explore my projects, read my blog, and learn more about my journey as a software engineer.
-    </p>
-    <div className="space-x-4">
-      <Link
-        to="/projects"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        View Projects
-      </Link>
-      <Link
-        to="/blog"
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-      >
-        Read Blog
-      </Link>
-      <Link
-        to="/about"
-        className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-      >
-        About Me
-      </Link>
-    </div>
-  </section>
+  <PageWrapper>
+    <section className="text-center p-8">
+      <h1 className="text-5xl font-bold mb-6 text-white">Welcome to My Portfolio</h1>
+      <p className="text-lg text-gray-400 mb-8">
+        Explore my projects, read my blog, and learn more about my journey as a software engineer.
+      </p>
+      <div className="space-x-4">
+        <Link
+          to="/projects"
+          className="bg-gray-800 text-white px-6 py-3 rounded hover:bg-gray-700 transition-transform transform hover:-translate-y-1"
+        >
+          View Projects
+        </Link>
+        <Link
+          to="/blog"
+          className="bg-gray-800 text-white px-6 py-3 rounded hover:bg-gray-700 transition-transform transform hover:-translate-y-1"
+        >
+          Read Blog
+        </Link>
+      </div>
+    </section>
+  </PageWrapper>
 );
 
 export default Home;
