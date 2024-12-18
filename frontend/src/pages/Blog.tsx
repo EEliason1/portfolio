@@ -29,16 +29,16 @@ const Blog: React.FC = () => {
 
   return (
     <PageWrapper>
-      <section className="p-8">
-        <h2 className="text-4xl font-bold mb-6 text-white text-center">Blog</h2>
+      <section className="px-4 py-8">
+        <h2 className="text-4xl font-bold text-white mb-6 text-center">Blog</h2>
         {loading ? (
           <p className="text-center text-gray-400">Loading blog posts...</p>
         ) : (
           <div className="space-y-6">
             {blogs.map((blog) => (
               <div key={blog._id} className="bg-gray-800 p-4 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold text-white">{blog.title}</h3>
-                <p className="text-sm text-gray-400 mb-2">By {blog.author}</p>
+                <h3 className="text-xl font-semibold text-white">{blog.title}</h3>
+                <p className="text-sm text-gray-500 mb-2">By {blog.author}</p>
                 <p className="text-gray-300">{blog.content}</p>
               </div>
             ))}

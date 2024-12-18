@@ -23,7 +23,7 @@ const Contact: React.FC = () => {
 
   return (
     <PageWrapper>
-      <section className="p-8 max-w-md mx-auto">
+      <section className="p-8 max-w-lg mx-auto">
         <h2 className="text-4xl font-bold text-white mb-6 text-center">Contact Me</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

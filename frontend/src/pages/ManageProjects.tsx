@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getProjects,
-  createProject,
-  updateProject,
-  deleteProject,
-} from "../api/adminApi";
+import { getProjects, createProject, updateProject, deleteProject } from "../api/adminApi";
 import { toast } from "react-toastify";
 import PageWrapper from "../components/PageWrapper";
 
@@ -64,7 +59,7 @@ const ManageProjects: React.FC = () => {
     <PageWrapper>
       <section className="p-8">
         <h2 className="text-4xl font-bold text-white mb-6 text-center">Manage Projects</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 max-w-lg mx-auto">
           <input
             type="text"
             placeholder="Title"
@@ -86,13 +81,6 @@ const ManageProjects: React.FC = () => {
             onChange={(e) => setForm({ ...form, repoUrl: e.target.value })}
             className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
           />
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={form.imageUrl}
-            onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-            className="w-full p-3 bg-gray-800 text-white border border-gray-600 rounded"
-          />
           <textarea
             placeholder="Description"
             value={form.description}
@@ -108,7 +96,7 @@ const ManageProjects: React.FC = () => {
           </button>
         </form>
 
-        <div className="mt-8 space-y-4">
+        <div className="mt-8 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <div key={project._id} className="bg-gray-800 p-4 rounded shadow-md">
               <h3 className="text-xl font-semibold text-white">{project.title}</h3>

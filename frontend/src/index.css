@@ -2,20 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Styling */
 body {
   background-color: #1a1a1a; /* Dark background */
   color: #e5e5e5; /* Subtle gray text */
   font-family: 'Inter', sans-serif;
 }
 
-a {
-  color: #ffffff;
+/* Typography */
+h1, h2, h3 {
+  color: #ffffff; /* White headings */
 }
 
+a {
+  color: #ffffff; /* White links */
+}
+
+/* Buttons */
 button {
   transition: transform 0.2s ease, background-color 0.2s ease;
+  border: none;
 }
 
 button:hover {
-  transform: translateY(-3px); /* Subtle hover lift */
+  transform: translateY(-3px); /* Subtle lift effect */
+  background-color: rgba(255, 255, 255, 0.1); /* Slight accent */
+}
+
+button:focus {
+  outline: none;
+  ring: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }

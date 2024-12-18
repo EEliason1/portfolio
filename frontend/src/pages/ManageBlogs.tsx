@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getBlogs,
-  createBlog,
-  updateBlog,
-  deleteBlog,
-} from "../api/adminApi";
+import { getBlogs, createBlog, updateBlog, deleteBlog } from "../api/adminApi";
 import { toast } from "react-toastify";
 import PageWrapper from "../components/PageWrapper";
 
@@ -64,7 +59,7 @@ const ManageBlogs: React.FC = () => {
     <PageWrapper>
       <section className="p-8">
         <h2 className="text-4xl font-bold text-white mb-6 text-center">Manage Blogs</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 max-w-lg mx-auto">
           <input
             type="text"
             placeholder="Title"
@@ -94,12 +89,12 @@ const ManageBlogs: React.FC = () => {
           </button>
         </form>
 
-        <div className="mt-8 space-y-4">
+        <div className="mt-8 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map((blog) => (
             <div key={blog._id} className="bg-gray-800 p-4 rounded shadow-md">
               <h3 className="text-xl font-semibold text-white">{blog.title}</h3>
-              <p className="text-gray-400 mt-2">{blog.content}</p>
-              <p className="text-sm text-gray-500 mt-1">By {blog.author}</p>
+              <p className="text-sm text-gray-500 mb-2">By {blog.author}</p>
+              <p className="text-gray-400">{blog.content}</p>
               <div className="mt-4 space-x-4">
                 <button
                   onClick={() => handleEdit(blog)}
